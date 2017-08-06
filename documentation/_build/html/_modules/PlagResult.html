@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PlagResult &mdash; Plagiarism Detector 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Plagiarism Detector 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Plagiarism Detector 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for PlagResult</h1><div class="highlight"><pre>
+
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># $Id$</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2006 Otto-von-Guericke-Universität Magdeburg</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of ECAssignmentBox.</span>
+<span class="c1">#</span>
+<span class="c1"># ECAssignmentBox is free software; you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation; either version 2 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># ECAssignmentBox is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with ECAssignmentBox; if not, write to the Free Software</span>
+<span class="c1"># Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA</span>
+
+<span class="c1">#===============================================================================</span>
+<span class="c1">#Author: Christian Dervaric</span>
+<span class="c1">#</span>
+<span class="c1">#Description:</span>
+<span class="c1">#This module contains the class PlagResult. PlagResult is an object holding</span>
+<span class="c1">#informations about the result of the plagiarism tests called from PlagChecker.</span>
+<span class="c1">#===============================================================================</span>
+
+<span class="kn">from</span> <span class="nn">errors</span> <span class="kn">import</span> <span class="n">NoValidArgumentError</span><span class="p">,</span> <span class="n">OutOfRangeError</span><span class="p">,</span> <span class="n">NoIdentifierSetError</span>
+
+
+
+<div class="viewcode-block" id="PlagResult"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult">[docs]</a><span class="k">class</span> <span class="nc">PlagResult</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class for the result of the comparison of two texts for plagiarism.</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span> <span class="o">=</span> <span class="bp">None</span> <span class="p">,</span> <span class="n">id2</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initializes the PlagResult object.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tiles</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id1</span> <span class="o">=</span> <span class="n">id1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id2</span> <span class="o">=</span> <span class="n">id2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id1StringLength</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id2StringLength</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algName</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normName</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">suspectedPlagiarism</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="c1">#===============================================================================</span>
+<span class="c1">#   GETTER AND SETTER</span>
+<span class="c1">#===============================================================================</span>
+<div class="viewcode-block" id="PlagResult.setTiles"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.setTiles">[docs]</a>    <span class="k">def</span> <span class="nf">setTiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tiles</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set tiles found in the Test for plagiarism.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">tiles</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">([]):</span>
+            <span class="k">raise</span> <span class="n">NoValidArgumentError</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tiles</span> <span class="o">=</span> <span class="n">tiles</span></div>
+
+<div class="viewcode-block" id="PlagResult.getTiles"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.getTiles">[docs]</a>    <span class="k">def</span> <span class="nf">getTiles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rf_tiles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tiles</span>
+        <span class="n">rf_tiles</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">rf_tiles</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># print enumerate(rf_tiles)</span>
+        <span class="n">rf</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">tile</span> <span class="ow">in</span> <span class="n">rf_tiles</span><span class="p">:</span>
+            <span class="c1"># print i</span>
+            <span class="c1"># print tile[0]</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">rf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">rf</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">tile</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">rf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tile</span><span class="p">)</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">rf</span></div>
+    <span class="c1"># def getRefineTiles(self):</span>
+    <span class="c1">#     rf_tiles = self.tiles</span>
+    <span class="c1">#     # print enumerate(rf_tiles)</span>
+    <span class="c1">#     rf = []</span>
+    <span class="c1">#     i=0</span>
+    <span class="c1">#     for  tile in rf_tiles:</span>
+    <span class="c1">#         # print i</span>
+    <span class="c1">#         # print tile[0]</span>
+    <span class="c1">#         if i == 0:</span>
+    <span class="c1">#             rf.append(tile)</span>
+    <span class="c1">#             i=i+1</span>
+    <span class="c1">#             continue</span>
+    <span class="c1">#         if rf[i - 1][0] == tile[0]:</span>
+    <span class="c1">#             continue</span>
+    <span class="c1">#         else:</span>
+    <span class="c1">#             rf.append(tile)</span>
+    <span class="c1">#             i=i+1</span>
+
+        <span class="c1">#return rf</span>
+<div class="viewcode-block" id="PlagResult.setSimilarity"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.setSimilarity">[docs]</a>    <span class="k">def</span> <span class="nf">setSimilarity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">similarity</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set similarity calculated in the Test for plagiarism.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">similarity</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">OutOfRangeError</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span> <span class="o">=</span> <span class="n">similarity</span></div>
+
+<div class="viewcode-block" id="PlagResult.getSimilarity"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.getSimilarity">[docs]</a>    <span class="k">def</span> <span class="nf">getSimilarity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get similarity calculated in the Test for plagiarism.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">similarity</span></div>
+
+<div class="viewcode-block" id="PlagResult.setIdentifier"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.setIdentifier">[docs]</a>    <span class="k">def</span> <span class="nf">setIdentifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1</span><span class="p">,</span> <span class="n">id2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set identifier for each compared text.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id1</span> <span class="o">=</span> <span class="n">id1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id2</span> <span class="o">=</span> <span class="n">id2</span></div>
+
+<div class="viewcode-block" id="PlagResult.getIdentifier"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.getIdentifier">[docs]</a>    <span class="k">def</span> <span class="nf">getIdentifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the identifier for the compared texts.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id1</span> <span class="o">==</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NoIdentifierSetError</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PlagResult.containsIdentifier"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.containsIdentifier">[docs]</a>    <span class="k">def</span> <span class="nf">containsIdentifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if the given identifier is one of the identifier of this result.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">id</span><span class="o">==</span><span class="bp">self</span><span class="o">.</span><span class="n">id1</span> <span class="ow">or</span> <span class="nb">id</span><span class="o">==</span><span class="bp">self</span><span class="o">.</span><span class="n">id2</span></div>
+
+<div class="viewcode-block" id="PlagResult.setIdStringLength"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.setIdStringLength">[docs]</a>    <span class="k">def</span> <span class="nf">setIdStringLength</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id1StringLength</span><span class="p">,</span> <span class="n">id2StringLength</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set the string length of the identifier strings. Important for Visualization.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id1StringLength</span> <span class="o">=</span> <span class="n">id1StringLength</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id2StringLength</span> <span class="o">=</span> <span class="n">id2StringLength</span></div>
+
+<div class="viewcode-block" id="PlagResult.getIdStringLength"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.getIdStringLength">[docs]</a>    <span class="k">def</span> <span class="nf">getIdStringLength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the string length of the identifier strings as a List[id1strlength, id2strlenght].</span>
+<span class="sd">            Important for Visualization.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id1StringLength</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2StringLength</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="PlagResult.setSuspectedPlagiarism"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.setSuspectedPlagiarism">[docs]</a>    <span class="k">def</span> <span class="nf">setSuspectedPlagiarism</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set boolean value: True means there is plagiarism suspicion other False&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">NoValidArgumentError</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">suspectedPlagiarism</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="PlagResult.isSuspectPlagiarism"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.isSuspectPlagiarism">[docs]</a>    <span class="k">def</span> <span class="nf">isSuspectPlagiarism</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns boolean value indicating if there is plagiarism suspcicion.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">suspectedPlagiarism</span></div>
+
+<div class="viewcode-block" id="PlagResult.setAlgorithmName"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.setAlgorithmName">[docs]</a>    <span class="k">def</span> <span class="nf">setAlgorithmName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algName</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the algorithm id used for the comparison.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algName</span> <span class="o">=</span> <span class="n">algName</span></div>
+
+<div class="viewcode-block" id="PlagResult.getAlgorithmName"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.getAlgorithmName">[docs]</a>    <span class="k">def</span> <span class="nf">getAlgorithmName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the algorithm id used for the comparison.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">algName</span></div>
+
+<div class="viewcode-block" id="PlagResult.setNormalizerName"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.setNormalizerName">[docs]</a>    <span class="k">def</span> <span class="nf">setNormalizerName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">normName</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets the normalizer id used for the comparison.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normName</span> <span class="o">=</span> <span class="n">normName</span></div>
+
+<div class="viewcode-block" id="PlagResult.getNormalizerName"><a class="viewcode-back" href="../PlagResult.html#PlagResult.PlagResult.getNormalizerName">[docs]</a>    <span class="k">def</span> <span class="nf">getNormalizerName</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the normalizer id used for the comparison.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">normName</span></div>
+
+<span class="c1">#===============================================================================</span>
+<span class="c1">#    Comparison</span>
+<span class="c1">#===============================================================================</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to compare if this object is equal to another one:  this == other&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">other</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getIdentifier</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">getIdentifier</span><span class="p">())</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSimilarity</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">getSimilarity</span><span class="p">()</span>
+            <span class="ow">and</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getTiles</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">getTiles</span><span class="p">())</span>
+            <span class="ow">and</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getIdStringLength</span><span class="p">())</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">getIdStringLength</span><span class="p">())):</span>
+            <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to compare if this object ist NOT equal with another object: this != other&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__eq__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+<span class="c1">#===============================================================================</span>
+<span class="c1">#    String Representation</span>
+<span class="c1">#===============================================================================</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the informal string representation of this PlagResult object.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="s1">&#39;PlagResult:</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="o">+</span> <span class="s1">&#39; Identifier: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getIdentifier</span><span class="p">())</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="o">+</span> <span class="s1">&#39; Similarity: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getSimilarity</span><span class="p">())</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="o">+</span> <span class="s1">&#39; Tiles: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getTiles</span><span class="p">())</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="o">+</span> <span class="s1">&#39; supected Plagiarism: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isSuspectPlagiarism</span><span class="p">())</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the form string representation of this PlagResult object.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getIdentifier</span><span class="p">()),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getSimilarity</span><span class="p">()),</span>
+                <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getTiles</span><span class="p">()),</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">isSuspectPlagiarism</span><span class="p">()))</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Plagiarism Detector 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2017, IEEE-MSIT.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

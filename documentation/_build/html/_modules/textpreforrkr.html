@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>textpreforrkr &mdash; Plagiarism Detector 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Plagiarism Detector 1.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Plagiarism Detector 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for textpreforrkr</h1><div class="highlight"><pre>
+<span class="c1"># -*- coding: cp1252 -*-</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+
+<span class="kn">import</span> <span class="nn">string</span>
+
+<span class="kn">from</span> <span class="nn">plag</span> <span class="kn">import</span> <span class="n">main_func</span>
+<span class="c1">#from plag import *</span>
+<span class="kn">import</span> <span class="nn">codecs</span>
+<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">sent_tokenize</span><span class="p">,</span><span class="n">word_tokenize</span>
+<span class="kn">from</span> <span class="nn">nltk.stem</span> <span class="kn">import</span> <span class="n">PorterStemmer</span>
+
+<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
+<span class="kn">from</span> <span class="nn">nltk.stem</span> <span class="kn">import</span> <span class="n">WordNetLemmatizer</span>
+
+
+
+<div class="viewcode-block" id="pre_processing"><a class="viewcode-back" href="../textpreforrkr.html#textpreforrkr.pre_processing">[docs]</a><span class="k">def</span> <span class="nf">pre_processing</span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="n">flag</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;This function cleans out the unnecessary information from the text and does the required pre processing . </span>
+<span class="sd">    </span>
+<span class="sd">    Pre processing steps:</span>
+<span class="sd">	*Sentence segmentation (Seg)*</span>
+<span class="sd">        Split text in the document into sentences and thereby allowing line-by-line processing in the subsequent tests.</span>
+
+<span class="sd">	*Tokenisation (Tok)*</span>
+<span class="sd">	Determine token (words, punctuation symbols, etc.) boundaries in sentences.</span>
+
+<span class="sd">	*Lowercase (Low)*</span>
+<span class="sd">	Substitute every uppercase letters with lowercase to generalise the matching.</span>
+
+<span class="sd">	*Stop-word removal (Stop)*</span>
+<span class="sd">	Remove functional words ( articles pronouns prepositions complementisers and determiners ) .</span>
+
+<span class="sd">	*Punctuation removal (Pun)*</span>
+<span class="sd">	Remove punctuation symbols.</span>
+
+<span class="sd">	*Stemming (Stem)*</span>
+<span class="sd">	Transform words into their stems in order to generalise the comparison analysis</span>
+
+<span class="sd">	*Lemmatisation (Lem)*</span>
+<span class="sd">	Transform words into their dictionary base forms in order to generalise the comparison analysis.</span>
+
+<span class="sd">    </span>
+<span class="sd">    :Argument1: text {string} -- text to be pre-processed</span>
+<span class="sd">    :Argument2:	flag {bool} -- stop-word arg . (default: {True})</span>
+<span class="sd">    </span>
+<span class="sd">    :returns: string -- pre-processed string</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="c1">#sent_tokenize_list = sent_tokenize(text)</span>
+    <span class="c1">#print sent_tokenize_list</span>
+    <span class="c1">#print len(sent_tokenize_list)</span>
+    <span class="c1">#tokenise words</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
+
+
+
+    <span class="n">stop_words</span><span class="o">=</span><span class="nb">set</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+    <span class="c1">#stop_words.append(&#39;u&#39;)</span>
+    <span class="n">words</span><span class="o">=</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">words</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1">#remove stop words</span>
+    <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="c1">#print &quot;Filtered&quot;,result</span>
+        <span class="n">fil</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span>
+
+    <span class="c1">#remove punctuation</span>
+    <span class="n">repstr</span><span class="o">=</span><span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">32</span>
+    <span class="n">table</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">,</span><span class="n">repstr</span><span class="p">)</span>
+    <span class="n">s</span><span class="o">=</span><span class="n">fil</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+    <span class="c1">#return s</span>
+
+    <span class="c1">#lemmatizing</span>
+    <span class="n">lemmatizer</span><span class="o">=</span><span class="n">WordNetLemmatizer</span><span class="p">()</span>
+    <span class="n">h</span><span class="o">=</span><span class="n">lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="c1">#print &quot;Lemma&quot;,lemmatizer.lemmatize(s)</span>
+    <span class="c1">#stemming</span>
+    <span class="n">wordss</span><span class="o">=</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    <span class="n">ps</span><span class="o">=</span><span class="n">PorterStemmer</span><span class="p">()</span>
+    <span class="n">list1</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">wordss</span><span class="p">:</span>
+        <span class="n">k</span><span class="o">=</span><span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="n">list1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="c1">#print list1</span>
+    <span class="n">final</span><span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">list1</span><span class="p">)</span>
+    <span class="n">finall</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">final</span><span class="p">)</span>
+    <span class="n">finallstr</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+    <span class="n">sanwrd</span> <span class="o">=</span> <span class="s1">&#39;u&#39;</span>
+    <span class="n">splitfinall</span> <span class="o">=</span> <span class="n">finall</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">wrd</span> <span class="ow">in</span> <span class="n">splitfinall</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">wrd</span> <span class="o">!=</span> <span class="n">sanwrd</span><span class="p">:</span>
+            <span class="n">finallstr</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">wrd</span><span class="p">)</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="n">finallstr</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">finallstr</span><span class="p">)</span>
+    <span class="c1">#print finallstr</span>
+    <span class="k">return</span> <span class="n">finallstr</span></div>
+
+
+
+
+
+
+<div class="viewcode-block" id="main_method"><a class="viewcode-back" href="../textpreforrkr.html#textpreforrkr.main_method">[docs]</a><span class="k">def</span> <span class="nf">main_method</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span><span class="n">inputFile</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function takes a list of original files which is to be compared with input file and displays the similar text and similarity </span>
+<span class="sd">    score.</span>
+<span class="sd">  </span>
+<span class="sd">    :Argument1: file_list (list of files) -- A list of original files .</span>
+<span class="sd">    :Argument2: inputFile (file) -- Input file which is suspected to have plagiarism</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">fileLastIndex</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">combinedFile</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+    <span class="n">inputText</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">file</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">rd</span><span class="p">:</span>
+            <span class="n">originalFile</span> <span class="o">=</span> <span class="n">rd</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">combinedFile</span><span class="o">=</span> <span class="n">combinedFile</span><span class="o">+</span><span class="n">originalFile</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="n">fileLastIndex</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">combinedFile</span><span class="o">.</span><span class="n">split</span><span class="p">()),</span><span class="nb">file</span><span class="p">))</span>
+
+
+    
+    
+    <span class="k">with</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">inputFile</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">rd</span><span class="p">:</span>
+        <span class="n">inputText</span> <span class="o">=</span> <span class="n">rd</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+   
+    <span class="n">main_func</span><span class="p">(</span><span class="n">inputText</span><span class="p">,</span> <span class="n">combinedFile</span><span class="p">,</span><span class="n">fileLastIndex</span><span class="p">)</span></div>
+    
+
+
+
+<span class="c1">#main_method([&#39;orig_taska.txt&#39;,&#39;g1pA_taska.txt&#39;,&#39;g2pE_taska.txt&#39;],&#39;g0pA_taska.txt&#39;)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Plagiarism Detector 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2017, IEEE-MSIT.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

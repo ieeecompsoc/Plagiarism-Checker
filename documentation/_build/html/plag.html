@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>plag (main_function) module &mdash; Plagiarism Detector 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Plagiarism Detector 1.0 documentation" href="index.html" />
+    <link rel="up" title="Plagiarism Checker With RKR-GST" href="modules.html" />
+    <link rel="next" title="textpreforrkr (Text_Preprocessing_For_RKR-GST) module" href="textpreforrkr.html" />
+    <link rel="prev" title="errors module" href="errors.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="textpreforrkr.html" title="textpreforrkr (Text_Preprocessing_For_RKR-GST) module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="errors.html" title="errors module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Plagiarism Detector 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">Plagiarism Checker With RKR-GST</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-plag">
+<span id="plag-main-function-module"></span><h1>plag (main_function) module<a class="headerlink" href="#module-plag" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="plag.GSTHashtable">
+<em class="property">class </em><code class="descclassname">plag.</code><code class="descname">GSTHashtable</code><a class="reference internal" href="_modules/plag.html#GSTHashtable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.GSTHashtable" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="plag.GSTHashtable.add">
+<code class="descname">add</code><span class="sig-paren">(</span><em>key</em>, <em>ob</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#GSTHashtable.add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.GSTHashtable.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores object &#8216;ob&#8217; for key &#8216;key&#8217; in a list. If there are already
+objects stored in the list for the key -&gt; &#8216;ob&#8217; is appended.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="plag.GSTHashtable.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#GSTHashtable.clear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.GSTHashtable.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the GSTHashtable, i.e. all entries are removed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="plag.GSTHashtable.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#GSTHashtable.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.GSTHashtable.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list with all objects for key &#8216;key&#8217;. If the key does not exist
+&#8216;None&#8217; is returned.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.RKR_GST">
+<code class="descclassname">plag.</code><code class="descname">RKR_GST</code><span class="sig-paren">(</span><em>P</em>, <em>T</em>, <em>minimalMatchingLength=3</em>, <em>initsearchSize=20</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#RKR_GST"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.RKR_GST" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes Running-Karp-Rabin-Greedy-String-Tiling</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Argument1:</th><td class="field-body">P {string} &#8211; pattern</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Argument2:</th><td class="field-body">T {string} &#8211; text</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Argument3:</th><td class="field-body">minimalMatchingLength {number} &#8211; minimal matching length to be considered (default: {3})</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Argument4:</th><td class="field-body">initsearchSize {number} &#8211; initial search size (default: {20})</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list &#8211; tiles</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.calcSimilarity">
+<code class="descclassname">plag.</code><code class="descname">calcSimilarity</code><span class="sig-paren">(</span><em>s1List</em>, <em>s2List</em>, <em>tiles</em>, <em>treshold</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#calcSimilarity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.calcSimilarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates Similarity and returns list [similarity:float, suspectedPlagiarism:bool]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.coverage">
+<code class="descclassname">plag.</code><code class="descname">coverage</code><span class="sig-paren">(</span><em>tiles</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#coverage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.coverage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sum of length of all tiles.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.createKRHashValue">
+<code class="descclassname">plag.</code><code class="descname">createKRHashValue</code><span class="sig-paren">(</span><em>substring</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#createKRHashValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.createKRHashValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Karp-Rabin Hash Value for the given substring
+and returns it.</p>
+<p>Based on:
+<a class="reference external" href="http://www-igm.univ-mlv.fr/~lecroq/string/node5.html">http://www-igm.univ-mlv.fr/~lecroq/string/node5.html</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.distToNextTile">
+<code class="descclassname">plag.</code><code class="descname">distToNextTile</code><span class="sig-paren">(</span><em>pos</em>, <em>stringList</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#distToNextTile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.distToNextTile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns distance to next tile, i.e. to next marked token.
+If not tile was found, it returns None.</p>
+<dl class="docutils">
+<dt>case 1: there is a next tile</dt>
+<dd>-&gt; pos + dist = first marked token
+-&gt; return dist</dd>
+<dt>case 2: there is no next tile</dt>
+<dd>-&gt; pos + dist = len(stringList)
+-&gt; return None</dd>
+</dl>
+<p>dist is also number of unmarked token &#8216;til next tile</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.isMarked">
+<code class="descclassname">plag.</code><code class="descname">isMarked</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#isMarked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.isMarked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="plag.isOccluded">
+<code class="descclassname">plag.</code><code class="descname">isOccluded</code><span class="sig-paren">(</span><em>match</em>, <em>tiles</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#isOccluded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.isOccluded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns true if the match is already occluded by another match
+in the tiles list.</p>
+<p>&#8220;Note that &#8220;not occluded&#8221; is taken to mean that none of the tokens
+Pp to Pp+maxmatch-1 and Tt to Tt+maxmatch-1 has been marked during
+the creation of an earlier tile. However, given that smaller tiles
+cannot be created before larger ones, it suffices that only the ends
+of each new putative tile be testet for occlusion, rather than the whole
+maxmimal match.&#8221;
+[&#8220;String Similarity via Greedy String Tiling and Running Karp-Rabin Matching&#8221;
+<a class="reference external" href="http://www.pam1.bcs.uwa.edu.au/~michaelw/ftp/doc/RKR_GST.ps">http://www.pam1.bcs.uwa.edu.au/~michaelw/ftp/doc/RKR_GST.ps</a>]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.isUnmarked">
+<code class="descclassname">plag.</code><code class="descname">isUnmarked</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#isUnmarked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.isUnmarked" title="Permalink to this definition">¶</a></dt>
+<dd><p>If string s is unmarked returns True otherwise False.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.jumpToNextUnmarkedTokenAfterTile">
+<code class="descclassname">plag.</code><code class="descname">jumpToNextUnmarkedTokenAfterTile</code><span class="sig-paren">(</span><em>pos</em>, <em>stringList</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#jumpToNextUnmarkedTokenAfterTile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.jumpToNextUnmarkedTokenAfterTile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first postion of an unmarked token after the next tile.</p>
+<dl class="docutils">
+<dt>case 1: -&gt; normal case</dt>
+<dd>-&gt; tile exists
+-&gt; there is an unmarked token after the tile</dd>
+<dt>case 2:</dt>
+<dd>-&gt; tile exists
+-&gt; but NO unmarked token after the tile</dd>
+<dt>case 3:</dt>
+<dd>-&gt; NO tile exists</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.main_func">
+<code class="descclassname">plag.</code><code class="descname">main_func</code><span class="sig-paren">(</span><em>text1</em>, <em>text2</em>, <em>index_list</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#main_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.main_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes original text files processed text and input file processed text ,compares them and return similarity content.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Argument1:</th><td class="field-body">text1 {String} &#8211; Combined original files text.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Argument1:</th><td class="field-body">text2 {String} &#8211; Input file text</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Argument1:</th><td class="field-body">index_list {list of integers} &#8211; list of index of end of text file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.markToken">
+<code class="descclassname">plag.</code><code class="descname">markToken</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#markToken"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.markToken" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mark string s.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.markstrings">
+<code class="descclassname">plag.</code><code class="descname">markstrings</code><span class="sig-paren">(</span><em>s</em>, <em>P</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#markstrings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.markstrings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="plag.run">
+<code class="descclassname">plag.</code><code class="descname">run</code><span class="sig-paren">(</span><em>s1</em>, <em>s2</em>, <em>mML=3</em>, <em>treshold=0.5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.run" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="docutils">
+<dt>This method runs a comparison on the two given strings s1 and s2 returning</dt>
+<dd>a PlagResult object containing the similarity value, the similarities as
+list of tiles and a boolean value indicating suspected plagiarism.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Argument1:</th><td class="field-body">s1 {string} &#8211; string 1</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Argument2:</th><td class="field-body">s2 {string} &#8211; string 2</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Argument3:</th><td class="field-body">mML {number} &#8211; minimumMatchingLength (default: {3})</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Argument4:</th><td class="field-body">treshold {number} &#8211; a single value between 0 and 1 that determines whether a comparsion between
+string should be marked as plagiarised (default: {0.5})</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">object &#8211; PlagResult</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">OutOfRangeError, OutOfRangeError, NoValidArgumentError</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.scanpattern">
+<code class="descclassname">plag.</code><code class="descname">scanpattern</code><span class="sig-paren">(</span><em>s</em>, <em>P</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#scanpattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.scanpattern" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scans the pattern and text string lists for matches.</p>
+<p>If a match is found that is twice as big as the search length s
+that size is returned, to be used to restart the scanpattern with it.
+All matches found are stored in a list of matches in queues.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plag.sim">
+<code class="descclassname">plag.</code><code class="descname">sim</code><span class="sig-paren">(</span><em>A</em>, <em>B</em>, <em>tiles</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/plag.html#sim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plag.sim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns similarity value for token of text A and B and the similary tiles covered.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="errors.html"
+                        title="previous chapter">errors module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="textpreforrkr.html"
+                        title="next chapter">textpreforrkr (Text_Preprocessing_For_RKR-GST) module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/plag.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="textpreforrkr.html" title="textpreforrkr (Text_Preprocessing_For_RKR-GST) module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="errors.html" title="errors module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Plagiarism Detector 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >Plagiarism Checker With RKR-GST</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2017, IEEE-MSIT.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>

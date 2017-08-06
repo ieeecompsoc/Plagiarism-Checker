@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>textpreforrkr (Text_Preprocessing_For_RKR-GST) module &mdash; Plagiarism Detector 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Plagiarism Detector 1.0 documentation" href="index.html" />
+    <link rel="up" title="Plagiarism Checker With RKR-GST" href="modules.html" />
+    <link rel="next" title="File Organsisaion" href="tree.html" />
+    <link rel="prev" title="plag (main_function) module" href="plag.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tree.html" title="File Organsisaion"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="plag.html" title="plag (main_function) module"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Plagiarism Detector 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">Plagiarism Checker With RKR-GST</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-textpreforrkr">
+<span id="textpreforrkr-text-preprocessing-for-rkr-gst-module"></span><h1>textpreforrkr (Text_Preprocessing_For_RKR-GST) module<a class="headerlink" href="#module-textpreforrkr" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="textpreforrkr.main_method">
+<code class="descclassname">textpreforrkr.</code><code class="descname">main_method</code><span class="sig-paren">(</span><em>file_list</em>, <em>inputFile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textpreforrkr.html#main_method"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textpreforrkr.main_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes a list of original files which is to be compared with input file and displays the similar text and similarity 
+score.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Argument1:</th><td class="field-body">file_list (list of files) &#8211; A list of original files .</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Argument2:</th><td class="field-body">inputFile (file) &#8211; Input file which is suspected to have plagiarism</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="textpreforrkr.pre_processing">
+<code class="descclassname">textpreforrkr.</code><code class="descname">pre_processing</code><span class="sig-paren">(</span><em>text</em>, <em>flag=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/textpreforrkr.html#pre_processing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#textpreforrkr.pre_processing" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function cleans out the unnecessary information from the text and does the required pre processing .</p>
+<dl class="docutils">
+<dt>Pre processing steps:</dt>
+<dd><p class="first"><em>Sentence segmentation (Seg)</em>
+Split text in the document into sentences and thereby allowing line-by-line processing in the subsequent tests.</p>
+<p><em>Tokenisation (Tok)</em>
+Determine token (words, punctuation symbols, etc.) boundaries in sentences.</p>
+<p><em>Lowercase (Low)</em>
+Substitute every uppercase letters with lowercase to generalise the matching.</p>
+<p><em>Stop-word removal (Stop)</em>
+Remove functional words ( articles pronouns prepositions complementisers and determiners ) .</p>
+<p><em>Punctuation removal (Pun)</em>
+Remove punctuation symbols.</p>
+<p><em>Stemming (Stem)</em>
+Transform words into their stems in order to generalise the comparison analysis</p>
+<p class="last"><em>Lemmatisation (Lem)</em>
+Transform words into their dictionary base forms in order to generalise the comparison analysis.</p>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Argument1:</th><td class="field-body">text {string} &#8211; text to be pre-processed</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Argument2:</th><td class="field-body">flag {bool} &#8211; stop-word arg . (default: {True})</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string &#8211; pre-processed string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="plag.html"
+                        title="previous chapter">plag (main_function) module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tree.html"
+                        title="next chapter">File Organsisaion</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/textpreforrkr.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tree.html" title="File Organsisaion"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="plag.html" title="plag (main_function) module"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Plagiarism Detector 1.0 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >Plagiarism Checker With RKR-GST</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2017, IEEE-MSIT.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
+    </div>
+  </body>
+</html>
