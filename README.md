@@ -18,8 +18,10 @@ pandas==0.20.2
 ```
 ### Getting Started
 ---
+for rkr-gst
+
 * Clone this repository
-* write ```from import textpreforrkr import main_method``` in your python file.
+* write ```from textpreforrkr import main_method``` in your python file or in python terminal.
 * Call ```main_method``` in your python file with arguments in the following format ```main_method([List of original file names],name of suspected copied file)```
 >**NOTE :** 
 > - list of files in same directory otherwise specify directory.
@@ -27,14 +29,20 @@ pandas==0.20.2
 
 ### Documentation
 ---
-<link>
+You can view  [documentation](https://cdn.rawgit.com/DeepanshuKapoor/Plagiarism-Checker/8b477e58/documentation/_build/html/index.html) of this project here.
 
 #### Authors
 ---
-IEEE MSIT MEMBERS
+**IEEE MSIT Summer Project**
 
+**Members**
 
- 
+* Deepanshu Kapoor , Sahil Chopra , Akanksha Rai Sharma
+
+**Mentors**
+
+* Yatin Gupta , Abhijeet Chauhan
+
 
 
 
