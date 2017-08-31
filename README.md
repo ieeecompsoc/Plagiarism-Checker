@@ -27,14 +27,20 @@ pandas==0.20.2
 
 ### Documentation
 ---
-<link>
+You can view  [documentation](https://cdn.rawgit.com/DeepanshuKapoor/Plagiarism-Checker/8b477e58/documentation/_build/html/index.html) of this project here.
 
 #### Authors
 ---
-IEEE MSIT MEMBERS
+**IEEE MSIT Summer Project**
 
+**Members**
 
- 
+* Deepanshu Kapoor , Sahil Chopra , Akanksha Rai Sharma
+
+**Mentors**
+
+* Yatin Gupta , Abhijeet Chauhan
+
 
 
 
