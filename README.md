@@ -21,7 +21,7 @@ pandas==0.20.2
 for rkr-gst
 
 * Clone this repository
-* write ```from textpreforrkr import main_method``` in your python file.
+* write ```from textpreforrkr import main_method``` in your python file or in python terminal.
 * Call ```main_method``` in your python file with arguments in the following format ```main_method([List of original file names],name of suspected copied file)```
 >**NOTE :** 
 > - list of files in same directory otherwise specify directory.
