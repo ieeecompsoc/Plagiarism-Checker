@@ -16,6 +16,11 @@ Or install it individually, following libraries using python pip command.
 nltk==3.2.2
 pandas==0.20.2
 ```
+```
+Note : We have used a starting dataset to test out our project . It can be referenced here:
+ir.shef.ac.uk/cloughie/resources/plagiarism_corpus.html
+```
+
 ### Getting Started
 ---
 for rkr-gst
